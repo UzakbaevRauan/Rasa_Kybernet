@@ -1,0 +1,119 @@
+version: "3.1"
+
+intents:
+  - greet
+  - goodbye
+  - id_number
+  - confirm
+  - deny
+
+entities:
+  - IDNUMBER
+  - FIRSTHALF
+  - SECONDHALF
+  - attempts_firsthalf
+  - attempts_secondhalf
+  - first_half_confirmed
+  - second_half_confirmed
+
+slots:
+  IDNUMBER:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_entity
+        entity: IDNUMBER
+
+  FIRSTHALF:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_entity
+        entity: FIRSTHALF
+
+  SECONDHALF:
+    type: text
+    influence_conversation: true
+    mappings:
+      - type: from_entity
+        entity: SECONDHALF
+
+  attempts_firsthalf:
+    type: float
+    initial_value: 0
+    influence_conversation: false
+    mappings:
+      - type: from_entity
+        entity: attempts_firsthalf
+
+  attempts_secondhalf:
+    type: float
+    initial_value: 0
+    influence_conversation: false
+    mappings:
+      - type: from_entity
+        entity: attempts_secondhalf
+
+  first_half_confirmed:
+    type: bool
+    initial_value: False
+    influence_conversation: false
+    mappings:
+      - type: from_entity
+        entity: first_half_confirmed
+
+  second_half_confirmed:
+    type: bool
+    initial_value: False
+    influence_conversation: false
+    mappings:
+      - type: from_entity
+        entity: second_half_confirmed
+
+forms:
+  confirm_halfes_form:
+    required_slots:
+      - FIRSTHALF
+      - first_half_confirmed
+      - SECONDHALF
+      - second_half_confirmed
+
+responses:
+  utter_greet:
+    - text: Привет, рад встречи. Пожалуйста напишите свой ИИН
+    - text: Как я рад тебя встретить! Пожалуйста напишите свой ИИН
+
+  utter_goodbye:
+    - text: До скорой встречи!
+    - text: Пока!
+
+  utter_confirm_your_id_number:
+    - text: Хорошо. Ваш ИИН {IDNUMBER}?
+    - text: Понял. Ваш ИИН {IDNUMBER}?
+    - text: Ваш ИИН {IDNUMBER}? Правильно?
+
+  utter_id_confirmed:
+    - text: "Ваш ИИН принят. До свидания."
+
+  utter_ask_correct_first_half:
+    - text: "Ваш первая половина ИИН такая: {FIRSTHALF}"
+
+  utter_ask_correct_second_half:
+    - text: "Можете диктовать правильную вторую половину вашего ИИН?"
+
+  utter_attempts_exceeded:
+    - text: "Вы превысили количество попыток. Мы подключаем вас к оператору. Пожалуйста, подождите."
+
+actions:
+  - action_say_id_number
+  - action_confirm_first_half
+  - action_confirm_second_half
+  - action_ask_correct_first_half
+  - action_ask_correct_second_half
+  - utter_goodbye
+  - utter_greet
+  - utter_confirm_your_id_number
+  - utter_id_confirmed
+  - utter_ask_correct_first_half
+  - utter_ask_correct_second_half
+  - utter_attempts_exceeded

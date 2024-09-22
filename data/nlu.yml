@@ -1,0 +1,52 @@
+version: "3.1"
+nlu:
+  - intent: greet
+    examples: |
+      - привет
+      - здравствуй
+      - добрый день
+
+  - intent: goodbye
+    examples: |
+      - пока
+      - до завтра
+      - до свидания
+
+  - intent: id_number
+    examples: |
+      - Мои ИИН [123456789123](IDNUMBER)
+      - ИИН [987654321234](IDNUMBER)
+      - [123456789123](IDNUMBER)
+      - Вот мой ИИН [987654321234](IDNUMBER)
+
+  - intent: confirm
+    examples: |
+      - Да
+      - Подтверждаю
+      - Верно
+
+  - intent: deny
+    examples: |
+      - Нет
+      - Ошибка
+      - Неправильно
+
+  - intent: provide_first_half
+    examples: |
+      - Мои первые 6 цифр [987654](FIRSTHALF)
+      - Первые 6 цифр [234567](FIRSTHALF)
+
+  - intent: provide_second_half
+    examples: |
+      - Мои последние 6 цифр [987654](FIRSTHALF)
+      - Последние 6 цифр [234567](FIRSTHALF)
+
+regex:
+  - name: IDNUMBER
+    pattern: "[0-9]{12}"
+
+  - name: FIRSTHALF
+    pattern: "[0-9]{6}"
+
+  - name: SECONDHALF
+    pattern: "[0-9]{6}"

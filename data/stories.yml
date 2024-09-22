@@ -1,0 +1,31 @@
+version: "3.1"
+
+stories:
+  - story: Проверка ИИН полностью правильно
+    steps:
+      - intent: greet
+      - action: utter_greet
+      - intent: id_number
+      - action: utter_confirm_your_id_number
+      - action: action_say_id_number
+      - intent: confirm
+      - action: utter_id_confirmed
+      - intent: goodbye
+      - action: utter_goodbye
+
+  - story: подтвердить правильную первую половину и вторую
+    steps:
+      - intent: greet
+      - action: utter_greet
+      - intent: id_number
+      - action: utter_confirm_your_id_number
+      - action: action_say_id_number
+      - intent: deny
+      - active_loop: confirm_halfes_form
+      - slot_was_set:
+          - first_half_confirmed: True
+          - second_half_confirmed: True
+      - action: utter_id_confirmed
+      - active_loop: null
+      - intent: goodbye
+      - action: utter_goodbye
